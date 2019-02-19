@@ -13,7 +13,7 @@ class MovieDetail extends Component{
     }
 
     async componentDidMount(){
-        const id = window.location.pathname.split("/")[1]
+        const id = window.location.pathname.split("/")[2]
         const movie = await API.fetchMovie(id);
         this.setState({movie:movie});
     }
@@ -23,12 +23,14 @@ class MovieDetail extends Component{
         //if the movie is not favorited, click performs a POST
         if (!this.state.saved){
             try{
-                const response = await fetch('https://localhost:3000/save',{
+                const response = await fetch('/save',{
                     method:'POST',
-                    body:{
-                        movie:movie
-                    },
-                    mode:"no-cors"
+                    body:JSON.stringify({
+                        movie
+                    }),
+                    headers:{
+                        "Content-Type":"application/json"
+                    }
                 });
                 console.log(response);
             }
@@ -39,7 +41,7 @@ class MovieDetail extends Component{
         //else, the click performs a DELETE
         else{
             try{
-                const response = await fetch('https://localhost:3000/save;',{
+                const response = await fetch('/save;',{
                     method:'DELETE',
                     body:{
                         id:movie.id

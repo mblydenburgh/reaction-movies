@@ -4,7 +4,7 @@ module.exports = function(app){
   app.post('/save',async (req,res) => {
     console.log(`in post route`);
     console.log(req.body);
-    const {id,title,poster_path,backdrop_path,overview,release_date} = req.body;
+    const {id,title,poster_path,backdrop_path,overview,release_date} = req.body.movie;
     try{
       await db.Movie.create({
         id:id,

@@ -7,7 +7,7 @@ const Movie = ({movie}) => {
     const POSTER_PATH = 'http://image.tmdb.org/t/p/w154';
     return (
         <MovieCard>
-            <Link to={`/${movie.id}`}>
+            <Link to={`/movie/${movie.id}`}>
                 <Overdrive id={movie.id}>
                     <MoviePoster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} />
                 </Overdrive>

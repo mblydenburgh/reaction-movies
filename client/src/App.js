@@ -27,8 +27,8 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path='/' component={() => <MovieList movies={this.state.movies} landingPage={true} />} />
+              <Route exact path='/movie/:id' component={() => <MovieDetail />} />
               <Route exact path='/search' component={() => <Search />} />
-              <Route exact path='/:id' component={() => <MovieDetail />} />
               {/* <Route exact path='/saved' component={} /> */}
             </Switch>
           </div>
