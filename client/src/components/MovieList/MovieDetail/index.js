@@ -8,13 +8,50 @@ import API from '../../../utils/api';
 class MovieDetail extends Component{
     state = {
         movies:[],
-        movie:{}
+        movie:{},
+        saved:false,
     }
 
     async componentDidMount(){
         const id = window.location.pathname.split("/")[1]
         const movie = await API.fetchMovie(id);
         this.setState({movie:movie});
+    }
+
+    handleClick = async (movie) => {
+        console.log(`handling click`);
+        //if the movie is not favorited, click performs a POST
+        if (!this.state.saved){
+            try{
+                const response = await fetch('https://localhost:3000/save',{
+                    method:'POST',
+                    body:{
+                        movie:movie
+                    },
+                    mode:"no-cors"
+                });
+                console.log(response);
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+        //else, the click performs a DELETE
+        else{
+            try{
+                const response = await fetch('https://localhost:3000/save;',{
+                    method:'DELETE',
+                    body:{
+                        id:movie.id
+                    },
+                    mode:"no-cors"
+                });
+                console.log(response);
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
     }
     
     
@@ -32,6 +69,7 @@ class MovieDetail extends Component{
                     <div>
                         <h1>{movie.title}</h1>
                         <h3>{movie.release_date}</h3>
+                        <button onClick={()=>this.handleClick(movie)}>Save</button>
                         <p>{movie.overview}</p>
                     </div>
                 </MovieInfo>
