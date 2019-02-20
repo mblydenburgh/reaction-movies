@@ -14,11 +14,10 @@ class App extends Component {
 
   async componentDidMount(){
     const recentMovies = await API.fetchMostRecent();
-    console.log(recentMovies);
+    // console.log(recentMovies);
     this.setState({movies:recentMovies})
   }
 
-  //! Why does the search compoent not render when placed below the movie detail component?
   render() {
     return (
       <Main>

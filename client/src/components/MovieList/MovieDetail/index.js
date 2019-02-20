@@ -14,12 +14,24 @@ class MovieDetail extends Component{
 
     async componentDidMount(){
         const id = window.location.pathname.split("/")[2]
-        const movie = await API.fetchMovie(id);
+        const dbResponse = await fetch(`/movie/${id}`,{
+            method:"GET",
+        });
+        let movie;
+        if(dbResponse){
+            movie = await dbResponse.json()
+            this.setState({saved:true})
+        }
+        else{
+            movie = await API.fetchMovie(id);
+        }
+
         this.setState({movie:movie});
     }
 
     handleClick = async (movie) => {
         console.log(`handling click`);
+
         //if the movie is not favorited, click performs a POST
         if (!this.state.saved){
             try{
@@ -32,7 +44,8 @@ class MovieDetail extends Component{
                         "Content-Type":"application/json"
                     }
                 });
-                console.log(response);
+                this.setState({saved:true});
+                // console.log(response);
             }
             catch(error){
                 console.log(error);
@@ -41,13 +54,13 @@ class MovieDetail extends Component{
         //else, the click performs a DELETE
         else{
             try{
-                const response = await fetch('/save;',{
+                const response = await fetch(`/movie/${movie.id};`,{
                     method:'DELETE',
                     body:{
                         id:movie.id
                     },
-                    mode:"no-cors"
                 });
+                this.setState({saved:false});
                 console.log(response);
             }
             catch(error){
@@ -62,6 +75,14 @@ class MovieDetail extends Component{
         const BACKDROP_PATH = "http://image.tmdb.org/t/p/original";
         const {movie} = this.state;
 
+        let buttonText
+        if(this.state.saved){
+            buttonText = "Remove Favorite";
+        }
+        else{
+            buttonText = "Save";
+        }
+
         return (
             <MovieDiv backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}>
                 <MovieInfo>
@@ -71,7 +92,7 @@ class MovieDetail extends Component{
                     <div>
                         <h1>{movie.title}</h1>
                         <h3>{movie.release_date}</h3>
-                        <button onClick={()=>this.handleClick(movie)}>Save</button>
+                        <button onClick={()=>this.handleClick(movie)}>{buttonText}</button>
                         <p>{movie.overview}</p>
                     </div>
                 </MovieInfo>

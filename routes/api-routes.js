@@ -22,10 +22,30 @@ module.exports = function(app){
     }
   });
 
-  app.delete('/save',async (req,res) => {
+  app.delete('/movie/:id',async (req,res) => {
     console.log(`in delete route`);
-    await db.Movie.findByIdAndDelete({
-      'id':req.body.id
-    })
+    try{
+      const id = parseInt(req.params.id);
+
+      const response = await db.Movie.findOneAndDelete({'id':id})
+      res.send(response);
+    }
+    catch(error){
+      console.log(error);
+      res.send(error)
+    }
   });
+
+  app.get('/movie/:id',async (req,res) => {
+    const id = req.params.id;
+    console.log(id);
+    try{
+      const movie = await db.Movie.findOne({'id':id});
+      // console.log(movie);
+      res.send(movie);
+    }
+    catch(error){
+      res.send(error);
+    }
+  })
 }

@@ -12,7 +12,7 @@ const API = {
                 }
             })
             const {results} = await response.json()
-            console.log(results);
+            // console.log(results);
             return results;
         }
         catch(error){
@@ -20,7 +20,7 @@ const API = {
         }
     },
 
-    //* This function fetchs more data on an individual movie
+    //* This function fetchs more data on an individual movie from TMDB
     async fetchMovie(id){
         const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_SECRET}`;
         try{
@@ -31,7 +31,7 @@ const API = {
                 }
             });
             const results = await response.json();
-            console.log(results);
+            // console.log(results);
             return results;
         }
         catch(error){
@@ -39,6 +39,7 @@ const API = {
         }
     },
 
+    //* This function queries the TMDB database based on a query string, and returns the id of results
     async searchForMovie(query){
         const encodedQuery = query.replace(' ','+');
         const url = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_SECRET}&query=${encodedQuery}`
