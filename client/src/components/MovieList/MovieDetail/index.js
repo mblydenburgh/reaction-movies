@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Overdrive from 'react-overdrive';
 import { MoviePoster } from '../Movie';
 import API from '../../../utils/api';
+import { object } from 'prop-types';
 
 class MovieDetail extends Component{
     state = {
@@ -17,12 +18,18 @@ class MovieDetail extends Component{
         const dbResponse = await fetch(`/movie/${id}`,{
             method:"GET",
         });
+        console.log(Object.entries(dbResponse).length);
+        console.log(dbResponse.construcor);
+        console.log(`response: ${JSON.stringify(dbResponse)}`);
         let movie;
-        if(dbResponse){
+        if(Object.entries(dbResponse).length === 0 && dbResponse.construcor === Object){
+        // if(JSON.stringify(dbResponse)!=="{}"){
+            console.log(`using database info`);
             movie = await dbResponse.json()
             this.setState({saved:true})
         }
         else{
+            console.log(`fetching from TMDB`);
             movie = await API.fetchMovie(id);
         }
 

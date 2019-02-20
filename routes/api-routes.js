@@ -38,14 +38,14 @@ module.exports = function(app){
 
   app.get('/movie/:id',async (req,res) => {
     const id = req.params.id;
-    console.log(id);
+    console.log(`looking up id ${id} in db`);
     try{
       const movie = await db.Movie.findOne({'id':id});
-      // console.log(movie);
+      console.log(`sending movie: ${movie}`);
       res.send(movie);
     }
     catch(error){
-      res.send(error);
+      res.send(null);
     }
   })
 }
