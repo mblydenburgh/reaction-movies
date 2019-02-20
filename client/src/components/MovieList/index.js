@@ -5,9 +5,18 @@ import Jumbotron from '../Jumbotron';
 
 const MovieList = ({movies,landingPage}) => {
     
-    const renderMovies = movies => movies.map(movie => ( 
-            <Movie key={movie.id} movie={movie} />
-    )) 
+    const renderMovies = movies => {
+        console.log(`rendering list with ${movies}`);
+        if(movies.length > 0){
+            return movies.map(movie => { 
+                return <Movie key={movie.id} movie={movie} />
+            }
+            )}
+        else{
+            return <h3>Please add favorites to display them here</h3>
+        }
+        
+    } 
 
     
     return (

@@ -1,6 +1,8 @@
 const db = require('../models/index.js');
 
 module.exports = function(app){
+
+  //* POST route to add a movie to the database
   app.post('/save',async (req,res) => {
     console.log(`in post route`);
     console.log(req.body);
@@ -22,6 +24,7 @@ module.exports = function(app){
     }
   });
 
+  //* DELETE route to remove movie from database
   app.delete('/movie/:id',async (req,res) => {
     console.log(`in delete route`);
     try{
@@ -36,6 +39,7 @@ module.exports = function(app){
     }
   });
 
+  //* GET route to look up individual movie from database
   app.get('/movie/:id',async (req,res) => {
     const id = req.params.id;
     console.log(`looking up id ${id} in db`);
@@ -46,6 +50,18 @@ module.exports = function(app){
     }
     catch(error){
       res.send(null);
+    }
+  });
+
+  //* GET route to look up all saved favorites
+  app.get('/saved',async(req,res) => {
+    console.log('looking up favorites');
+    try{
+      const favorites = await db.Movie.find({});
+      res.send(favorites);
+    }
+    catch(error){
+      res.send(error);
     }
   })
 }

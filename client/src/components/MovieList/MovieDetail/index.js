@@ -14,16 +14,16 @@ class MovieDetail extends Component{
     }
 
     async componentDidMount(){
+        //Get current id for movie from browser path
         const id = window.location.pathname.split("/")[2]
+        //Check to see if the movie is currently favorited
         const dbResponse = await fetch(`/movie/${id}`,{
             method:"GET",
         });
-        console.log(Object.entries(dbResponse).length);
-        console.log(dbResponse.construcor);
-        console.log(`response: ${JSON.stringify(dbResponse)}`);
+        
+        //If the database returns an empty object, it is not favorited. TMDB to be called for movie data
         let movie;
         if(Object.entries(dbResponse).length === 0 && dbResponse.construcor === Object){
-        // if(JSON.stringify(dbResponse)!=="{}"){
             console.log(`using database info`);
             movie = await dbResponse.json()
             this.setState({saved:true})
@@ -36,9 +36,9 @@ class MovieDetail extends Component{
         this.setState({movie:movie});
     }
 
-    handleClick = async (movie) => {
-        console.log(`handling click`);
 
+
+    handleClick = async (movie) => {
         //if the movie is not favorited, click performs a POST
         if (!this.state.saved){
             try{
@@ -82,6 +82,7 @@ class MovieDetail extends Component{
         const BACKDROP_PATH = "http://image.tmdb.org/t/p/original";
         const {movie} = this.state;
 
+        //Change button text depending on "saved" state
         let buttonText
         if(this.state.saved){
             buttonText = "Remove Favorite";

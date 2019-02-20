@@ -10,12 +10,21 @@ import API from './utils/api';
 class App extends Component {
   state = {
     "movies": [],
+    "favorites":[],
   }
 
   async componentDidMount(){
+    //* Call to TMDB to load recent popular movies
     const recentMovies = await API.fetchMostRecent();
-    // console.log(recentMovies);
-    this.setState({movies:recentMovies})
+
+    //* Call to to databse to fetch any saved favorites
+    const favoritesResponse = await fetch('/saved');
+    const favorites = await favoritesResponse.json();
+
+    this.setState({
+      movies:recentMovies,
+      favorites:favorites
+    })
   }
 
   render() {
@@ -28,7 +37,7 @@ class App extends Component {
               <Route exact path='/' component={() => <MovieList movies={this.state.movies} landingPage={true} />} />
               <Route exact path='/movie/:id' component={() => <MovieDetail />} />
               <Route exact path='/search' component={() => <Search />} />
-              {/* <Route exact path='/saved' component={} /> */}
+              <Route exact path='/saved' component={() => <MovieList movies={this.state.favorites} landingPage={false} />} />
             </Switch>
           </div>
         </Router>

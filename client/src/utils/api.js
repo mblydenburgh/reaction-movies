@@ -12,7 +12,6 @@ const API = {
                 }
             })
             const {results} = await response.json()
-            // console.log(results);
             return results;
         }
         catch(error){
@@ -31,7 +30,6 @@ const API = {
                 }
             });
             const results = await response.json();
-            // console.log(results);
             return results;
         }
         catch(error){
