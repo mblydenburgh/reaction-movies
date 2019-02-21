@@ -6,6 +6,7 @@ import MovieList from './components/MovieList';
 import MovieDetail from './components/MovieList/MovieDetail';
 import Search from './components/Search'
 import API from './utils/api';
+import './App.css';
 
 class App extends Component {
   state = {

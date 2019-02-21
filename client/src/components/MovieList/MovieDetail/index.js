@@ -119,15 +119,20 @@ const MovieDiv = Styled.div`
 `
 
 const MovieInfo = Styled.div`
-    background:white;
+    background:#222;
+    color: #fff;
     text-align:left;
     padding:2rem 10%;
     display:flex;
     > div
         {
             margin-left:20px;
+
+            >p{
+                font-size: 1.2rem; 
+            }
         }
-    img
+    >img
         {
             position:relative;
             top:5px;
