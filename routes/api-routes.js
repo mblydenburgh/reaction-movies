@@ -54,7 +54,7 @@ module.exports = function(app){
   });
 
   //* GET route to look up all saved favorites
-  app.get('/saved',async(req,res) => {
+  app.get('/api/saved',async(req,res) => {
     console.log('looking up favorites');
     try{
       const favorites = await db.Movie.find({});

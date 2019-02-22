@@ -92,30 +92,40 @@ class MovieDetail extends Component{
         }
 
         return (
-            <MovieDiv backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}>
-                <MovieInfo>
-                    <Overdrive id={String(movie.id)}>
-                        <MoviePoster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} />
-                    </Overdrive>
-                    <div>
-                        <h1>{movie.title}</h1>
-                        <h3>{movie.release_date}</h3>
-                        <button onClick={()=>this.handleClick(movie)}>{buttonText}</button>
-                        <p>{movie.overview}</p>
-                    </div>
-                </MovieInfo>
-            </MovieDiv>
+            <div>
+                <MovieBackdrop backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}></MovieBackdrop>
+                <MovieDiv>
+                    <MovieInfo>
+                        <Overdrive id={String(movie.id)}>
+                            <MoviePoster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} />
+                        </Overdrive>
+                        <div>
+                            <h1>{movie.title}</h1>
+                            <h3>{movie.release_date}</h3>
+                            <button onClick={()=>this.handleClick(movie)}>{buttonText}</button>
+                            <p>{movie.overview}</p>
+                        </div>
+                    </MovieInfo>
+                </MovieDiv>
+            </div>
         )
     }
 }
 
 export default MovieDetail;
 
+const MovieBackdrop = Styled.div`
+    background-size: cover;
+    background:url(${props => props.backdrop}) center center no-repeat;
+    min-height: 600px;
+    margin: 1rem;
+    border-radius: 5px;
+`
+
 const MovieDiv = Styled.div`
     position:relative;
-    padding-top:50vh;
-    background-size:cover;
-    background:url(${props => props.backdrop}) center no-repeat;
+    background-size:contain;
+    margin: 1rem;
 `
 
 const MovieInfo = Styled.div`

@@ -19,7 +19,7 @@ class App extends Component {
     const recentMovies = await API.fetchMostRecent();
 
     //* Call to to databse to fetch any saved favorites
-    const favoritesResponse = await fetch('/saved');
+    const favoritesResponse = await fetch('/api/saved');
     const favorites = await favoritesResponse.json();
 
     this.setState({
