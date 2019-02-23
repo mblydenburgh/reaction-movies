@@ -13,19 +13,27 @@ class MovieDetail extends Component{
         saved:false,
     }
 
+    checkFavorites = (favArray) => {
+        return favArray.some(favorite => {
+            console.log(`favorite id: ${favorite.id} / movie id:${window.location.pathname.split("/")[2]}`);
+            return favorite.id === Number(window.location.pathname.split("/")[2])
+        })
+    }
+
     async componentDidMount(){
         //Get current id for movie from browser path
         const id = window.location.pathname.split("/")[2]
         //Check to see if the movie is currently favorited
-        const dbResponse = await fetch(`/movie/${id}`,{
+        const dbResponse = await fetch(`/api/movie/${id}`,{
             method:"GET",
         });
-        
+        const data = await dbResponse.json();
+        console.log(data);
         //If the database returns an empty object, it is not favorited. TMDB to be called for movie data
         let movie;
-        if(Object.entries(dbResponse).length === 0 && dbResponse.construcor === Object){
+        if(this.checkFavorites(this.props.favorites)){
             console.log(`using database info`);
-            movie = await dbResponse.json()
+            movie = data;
             this.setState({saved:true})
         }
         else{
@@ -42,7 +50,7 @@ class MovieDetail extends Component{
         //if the movie is not favorited, click performs a POST
         if (!this.state.saved){
             try{
-                const response = await fetch('/save',{
+                const response = await fetch('/api/save',{
                     method:'POST',
                     body:JSON.stringify({
                         movie
@@ -61,7 +69,7 @@ class MovieDetail extends Component{
         //else, the click performs a DELETE
         else{
             try{
-                const response = await fetch(`/movie/${movie.id};`,{
+                const response = await fetch(`/api/movie/${movie.id};`,{
                     method:'DELETE',
                     body:{
                         id:movie.id

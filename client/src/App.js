@@ -36,7 +36,7 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path='/' component={() => <MovieList movies={this.state.movies} landingPage={true} />} />
-              <Route exact path='/movie/:id' component={() => <MovieDetail />} />
+              <Route exact path='/movie/:id' component={() => this.state.favorites?<MovieDetail favorites={this.state.favorites} />:null} />
               <Route exact path='/search' component={() => <Search />} />
               <Route exact path='/saved' component={() => <MovieList movies={this.state.favorites} landingPage={false} />} />
             </Switch>

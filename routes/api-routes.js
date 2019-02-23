@@ -3,7 +3,7 @@ const db = require('../models/index.js');
 module.exports = function(app){
 
   //* POST route to add a movie to the database
-  app.post('/save',async (req,res) => {
+  app.post('/api/save',async (req,res) => {
     console.log(`in post route`);
     console.log(req.body);
     const {id,title,poster_path,backdrop_path,overview,release_date} = req.body.movie;
@@ -25,7 +25,7 @@ module.exports = function(app){
   });
 
   //* DELETE route to remove movie from database
-  app.delete('/movie/:id',async (req,res) => {
+  app.delete('/api/movie/:id',async (req,res) => {
     console.log(`in delete route`);
     try{
       const id = parseInt(req.params.id);
@@ -40,7 +40,7 @@ module.exports = function(app){
   });
 
   //* GET route to look up individual movie from database
-  app.get('/movie/:id',async (req,res) => {
+  app.get('/api/movie/:id',async (req,res) => {
     const id = req.params.id;
     console.log(`looking up id ${id} in db`);
     try{
