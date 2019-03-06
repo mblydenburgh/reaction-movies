@@ -45,8 +45,13 @@ module.exports = function(app){
     console.log(`looking up id ${id} in db`);
     try{
       const movie = await db.Movie.findOne({'id':id});
-      console.log(`sending movie: ${movie}`);
-      res.send(movie);
+      if(movie !== null){
+        console.log(`returning movie: ${movie}`);
+        res.send(movie);
+      }
+      else{
+        res.send({});
+      }
     }
     catch(error){
       res.send(null);

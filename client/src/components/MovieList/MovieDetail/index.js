@@ -23,11 +23,14 @@ class MovieDetail extends Component{
     async componentDidMount(){
         //Get current id for movie from browser path
         const id = window.location.pathname.split("/")[2]
+        console.log(`Movie id: ${id}`);
         //Check to see if the movie is currently favorited
         const dbResponse = await fetch(`/api/movie/${id}`,{
             method:"GET",
         });
+        console.log(dbResponse);
         const data = await dbResponse.json();
+        console.log(`Data-`);
         console.log(data);
         //If the database returns an empty object, it is not favorited. TMDB to be called for movie data
         let movie;
